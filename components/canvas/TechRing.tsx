@@ -10,7 +10,7 @@ export default function TechRing() {
     const groupRef = useRef<THREE.Group>(null);
 
     // 半径大小，决定圆环有多大
-    const radius = 6;
+    const radius = 8;
 
     // 让圆环自动旋转
     useFrame((state, delta) => {
@@ -64,21 +64,18 @@ export default function TechRing() {
                         {/* 3. HTML 标签：直接显示工具名字 */}
                         {/* Html 组件会自动面向摄像机，非常适合做标注 */}
                         <Html
-                            position={[0, 0.5, 0]} // 稍微在球体上方一点
+                            position={[0, 0.5, 0]}
                             center
-                            transform // 让文字跟随 3D 空间缩放
-                            sprite // 像精灵图一样永远面向屏幕
+                            transform
+                            sprite
                         >
-                            <div className="flex flex-col items-center pointer-events-none select-none">
-                <span
-                    className="text-xs font-bold px-2 py-1 rounded bg-black/50 border border-white/20 backdrop-blur-md whitespace-nowrap"
-                    style={{ color: tool.color, boxShadow: `0 0 10px ${tool.color}40` }}
-                >
-                  {tool.name}
-                </span>
-                                <span className="text-[10px] text-gray-400 mt-1 opacity-80">
-                  {tool.stat}
-                </span>
+                            <div className="pointer-events-none select-none">
+                                <span
+                                    className="text-xs font-bold px-2 py-1 rounded bg-black/50 border border-white/20 backdrop-blur-md whitespace-nowrap"
+                                    style={{ color: tool.color, boxShadow: `0 0 10px ${tool.color}40` }}
+                                >
+                                  {tool.name}
+                                </span>
                             </div>
                         </Html>
                     </group>
