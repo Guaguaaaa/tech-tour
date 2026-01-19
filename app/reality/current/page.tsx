@@ -2,16 +2,20 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { tools } from '@/data/tools';
+import { tools, ToolData } from '@/data/tools';
 import ToolCard from '@/components/ui/ToolCard';
 import SlideControl from '@/components/ui/SlideControl';
 import FadeIn from '@/components/animation/FadeIn';
+import DetailOverlay from '@/components/ui/DetailOverlay';
 
 export default function CurrentRealityPage() {
-    // 状态：控制是否揭晓答案
+    // 状态 1：控制是否揭晓答案
     const [isRevealed, setIsRevealed] = useState(false);
 
-    // 获取 "Top" 类别的工具 (Aura, Connect, ChatPwC)
+    // 状态 2：控制当前选中的工具（用于显示详情）
+    const [selectedTool, setSelectedTool] = useState<ToolData | null>(null);
+
+    // 获取 "Top" 类别的工具
     const topTools = tools.filter(t => t.category === 'top');
 
     return (
@@ -37,7 +41,7 @@ export default function CurrentRealityPage() {
                 {/* @ts-expect-error: Known issue with React 18 types and Framer Motion AnimatePresence children */}
                 <AnimatePresence mode='wait'>
                     {!isRevealed ? (
-                        // State A: Guessing Phase (Three Question Marks)
+                        // State A: Guessing Phase
                         <motion.div
                             key="guess"
                             initial={{ opacity: 0 }}
@@ -61,7 +65,7 @@ export default function CurrentRealityPage() {
                             </button>
                         </motion.div>
                     ) : (
-                        // State B: Revealed Phase (Tool Cards)
+                        // State B: Revealed Phase
                         <motion.div
                             key="reveal"
                             className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full"
@@ -69,9 +73,13 @@ export default function CurrentRealityPage() {
                             {topTools.map((tool, index) => (
                                 <motion.div
                                     key={tool.id}
-                                    initial={{ opacity: 0, y: 30 }}
-                                    animate={{ opacity: 1, y: 0 }}
+                                    // 修改点：只改变透明度，不再改变 y 轴位置
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
                                     transition={{ delay: index * 0.15, duration: 0.5 }}
+                                    onClick={() => setSelectedTool(tool)}
+                                    // 修改点：去掉了下方的 click for details 文字
+                                    className="cursor-pointer transform transition-transform hover:scale-[1.02]"
                                 >
                                     <ToolCard tool={tool} />
                                 </motion.div>
@@ -86,6 +94,12 @@ export default function CurrentRealityPage() {
                 prev="/"
                 next="/reality/gap"
                 pageName="The Status Quo"
+            />
+
+            {/* Detail Overlay */}
+            <DetailOverlay
+                tool={selectedTool}
+                onClose={() => setSelectedTool(null)}
             />
         </main>
     );
