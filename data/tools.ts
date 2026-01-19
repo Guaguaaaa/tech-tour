@@ -1,6 +1,6 @@
-import { LucideIcon, Bot, Activity, Aperture, Users, Layers, PieChart, Database, MessageSquare, Globe } from 'lucide-react';
+import { Activity, Users, Bot, Database, FileSpreadsheet, PenTool } from 'lucide-react';
 
-export type ToolCategory = 'top' | 'efficiency' | 'other';
+export type ToolCategory = 'top' | 'potential' | 'other';
 
 export interface ToolData {
     id: string;
@@ -18,98 +18,91 @@ export interface ToolData {
 }
 
 export const tools: ToolData[] = [
-    // --- Top 3 Tools ---
+    // --- 1. Current Top Tools (Mature Phase - The Big Three) ---
     {
-        id: 't1',
-        name: 'ChatPWC',
+        id: 'aura',
+        name: 'Aura',
         category: 'top',
-        shortDesc: 'Secure GenAI assistant.',
+        shortDesc: 'Global audit platform.',
+        stat: 'Backbone',
+        iconName: 'Activity',
+        color: '#EB8C00',
+        details: {
+            userFeedback: 'Audit procedures, documentation, and quality controls are all built around Aura.',
+            improvement: 'Standardised ecosystem.',
+            fullDesc: 'Aura is not just a tool; it is the backbone of the audit process. Multiple generations of staff have been trained on it from the beginning of their careers.'
+        }
+    },
+    {
+        id: 'connect',
+        name: 'Connect',
+        category: 'top',
+        shortDesc: 'Client collaboration.',
+        stat: 'Embedded',
+        iconName: 'Users',
+        color: '#E0301E',
+        details: {
+            userFeedback: 'Tightly linked to core engagement activities and document sharing.',
+            improvement: 'Natural extension of the job.',
+            fullDesc: 'Connect supports client collaboration. Training materials and methodology references all assume that Connect is part of the standard way of working.'
+        }
+    },
+    {
+        id: 'chatpwc',
+        name: 'ChatPwC',
+        category: 'top',
+        shortDesc: 'GenAI assistant.',
         stat: 'High Adoption',
         iconName: 'Bot',
         color: '#D04A02',
         details: {
-            // 修正: summarizing -> summarising
-            userFeedback: 'Essential for quick research and summarising documents safely.',
-            improvement: 'Sometimes struggles with very specific internal policy queries.',
-            fullDesc: 'ChatPWC is the secure, private generative AI tool that empowers staff to innovate without risking client data confidentiality.'
-        }
-    },
-    {
-        id: 't2',
-        name: 'Aura',
-        category: 'top',
-        shortDesc: 'Global audit platform.',
-        stat: 'Core System',
-        iconName: 'Activity',
-        color: '#EB8C00',
-        details: {
-            userFeedback: 'The single source of truth for all audit engagements.',
-            improvement: 'Sync speeds can be slow during peak filing seasons.',
-            fullDesc: 'Aura is the backbone of our assurance practice, ensuring consistency and quality in audits worldwide.'
-        }
-    },
-    {
-        id: 't3',
-        name: 'Halo',
-        category: 'top',
-        shortDesc: 'Data auditing analytics.',
-        stat: 'Analytics',
-        iconName: 'Aperture',
-        color: '#E0301E',
-        details: {
-            // 修正: Visualize -> Visualise
-            userFeedback: 'Visualises journals incredibly well to spot anomalies.',
-            improvement: 'Requires clean data inputs; not forgiving of messy client formats.',
-            fullDesc: 'Halo revolutionises how we analyse general ledgers, allowing us to test 100% of transactions rather than just samples.'
+            userFeedback: 'Used to draft emails, check wording, or clarify technical concepts.',
+            improvement: 'Low-friction assistant.',
+            fullDesc: 'Acts as a convenient, low-friction assistant. It removes small daily bottlenecks and gives staff the confidence to move faster on low-risk tasks.'
         }
     },
 
-    // --- Efficiency Tools ---
+    // --- 2. Potential Tools (Investment Phase - The Gap) ---
     {
-        id: 'e1',
-        name: 'Power BI',
-        category: 'efficiency',
-        shortDesc: 'Business analytics.',
-        stat: 'Growing',
-        iconName: 'PieChart',
-        color: '#F2C811',
+        id: 'digitallab',
+        name: 'Digital Lab',
+        category: 'potential',
+        shortDesc: 'Automation repository.',
+        stat: 'Underused',
+        iconName: 'Database',
+        color: '#0082CA',
         details: {
-            userFeedback: 'Integration with Excel is seamless.',
-            improvement: 'Design capabilities need to be more flexible for client decks.',
-            fullDesc: 'Power BI is often overlooked. It bridges the gap between Excel and heavy-duty data science tools.'
+            userFeedback: 'Rarely heard of in day-to-day Assurance work.',
+            improvement: 'Potential goldmine for automation.',
+            fullDesc: 'A repository of thousands of employee-built automation tools. In principle a goldmine, but in practice, usage in Assurance appears limited and opportunistic.'
         }
     },
     {
-        id: 'e2',
-        name: 'CRM',
-        category: 'efficiency',
-        shortDesc: 'Client Relationship Mgmt.',
-        stat: 'Siloed Data',
-        iconName: 'Users',
-        color: '#00A1E0',
+        id: 'excelai',
+        name: 'Excel AI',
+        category: 'potential',
+        shortDesc: 'Spreadsheet Copilot.',
+        stat: 'Early Stage',
+        iconName: 'FileSpreadsheet',
+        color: '#107C41', // Excel Green
         details: {
-            userFeedback: 'Good for tracking pipeline, but data entry is tedious.',
-            improvement: 'Mobile app needs to be faster for partners on the go.',
-            // 修正: Center -> Centre (虽然这里语境里没有 center，但作为习惯检查)
-            fullDesc: 'Our CRM system holds valuable relationship data, but is currently utilised more for compliance than for active relationship mining.'
+            userFeedback: 'Seen as "nice to have" but unproven.',
+            improvement: 'Trust gap exists.',
+            fullDesc: 'Could help with generating formulas and transforming data. However, most colleagues still build formulas manually and rely on their own memory.'
         }
     },
     {
-        id: 'e3',
-        name: 'ERP',
-        category: 'efficiency',
-        shortDesc: 'Enterprise Resource Planning.',
-        stat: 'Complex',
-        iconName: 'Layers',
-        color: '#404040',
+        id: 'pwcwrite',
+        name: 'PwC Write',
+        category: 'potential',
+        shortDesc: 'Drafting assistant.',
+        stat: 'Early Stage',
+        iconName: 'PenTool',
+        color: '#D04A02',
         details: {
-            userFeedback: 'It does everything, but finding the right button takes forever.',
-            improvement: 'User interface needs a modern overhaul to be intuitive.',
-            fullDesc: 'The ERP handles our core finance and HR, but its complexity often hinders simple tasks like expense reporting.'
+            userFeedback: 'Drafting is still done from scratch in Word.',
+            improvement: 'Habit gap.',
+            fullDesc: 'Designed to support structure, clarity, and tone. Yet, many still draft from scratch in Word and rely on traditional review cycles.'
         }
-    },
-
-    // --- Other Tools ---
-    { id: 'o1', name: 'Alteryx', category: 'other', shortDesc: 'Data Prep', stat: '-', iconName: 'Database', color: '#0082CA', details: { userFeedback: '', improvement: '', fullDesc: '' } },
-    { id: 'o2', name: 'Tableau', category: 'other', shortDesc: 'Viz', stat: '-', iconName: 'Globe', color: '#E97627', details: { userFeedback: '', improvement: '', fullDesc: '' } },
+    }
 ];

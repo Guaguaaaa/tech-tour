@@ -1,24 +1,30 @@
-import Scene from '../components/canvas/Scene';
+'use client';
+
+import Link from 'next/link';
+import FadeIn from '@/components/animation/FadeIn';
 
 export default function Home() {
     return (
-        <main className="min-h-screen bg-black text-white selection:bg-cyan-500/30 overflow-hidden">
-            <section className="relative w-full h-screen flex flex-col items-center justify-center">
-                {/* 背景 3D 场景 */}
-                <div className="absolute inset-0 z-0">
-                    <Scene />
-                </div>
+        <main className="flex flex-col items-center justify-center h-screen w-full relative z-10 px-4">
+            <FadeIn>
+                <h1 className="text-5xl md:text-8xl font-bold tracking-tighter text-white mb-6 text-center">
+                    Tech Reality
+                </h1>
+            </FadeIn>
 
-                {/* 文字内容 */}
-                <div className="relative z-10 text-center pointer-events-none mt-[-100px]">
-                    <h1 className="text-5xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/40 mb-4">
-                        Welcome to the Tour
-                    </h1>
-                    <p className="text-xl text-gray-400 tracking-wide uppercase">
-                        Pick a tool to start your journey
-                    </p>
-                </div>
-            </section>
+            <FadeIn delay={0.2}>
+                <p className="text-sm md:text-xl text-gray-400 tracking-[0.2em] uppercase mb-12 text-center">
+                    Problem Statement 3: The GenAI Divide
+                </p>
+            </FadeIn>
+
+            <FadeIn delay={0.4}>
+                <Link href="/reality/current">
+                    <button className="px-10 py-4 bg-white text-black font-bold tracking-widest hover:bg-cyan-400 hover:text-black transition-all duration-300 rounded-sm">
+                        START TOUR
+                    </button>
+                </Link>
+            </FadeIn>
         </main>
     );
 }
