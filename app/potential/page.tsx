@@ -60,7 +60,6 @@ export default function PotentialPage() {
                 pageName="The Sleeping Giants"
             />
 
-            {/* 4. 渲染详情浮层 */}
             <DetailOverlay
                 tool={selectedTool}
                 onClose={() => setSelectedTool(null)}

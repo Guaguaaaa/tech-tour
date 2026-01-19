@@ -38,7 +38,7 @@ export default function CurrentRealityPage() {
 
             {/* Interaction Area */}
             <div className="w-full max-w-7xl mx-auto">
-                {/* @ts-expect-error: Known issue with React 18 types and Framer Motion AnimatePresence children */}
+                {/* 修正：删除了 @ts-expect-error 注释，因为构建环境不需要它 */}
                 <AnimatePresence mode='wait'>
                     {!isRevealed ? (
                         // State A: Guessing Phase
@@ -73,12 +73,10 @@ export default function CurrentRealityPage() {
                             {topTools.map((tool, index) => (
                                 <motion.div
                                     key={tool.id}
-                                    // 修改点：只改变透明度，不再改变 y 轴位置
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     transition={{ delay: index * 0.15, duration: 0.5 }}
                                     onClick={() => setSelectedTool(tool)}
-                                    // 修改点：去掉了下方的 click for details 文字
                                     className="cursor-pointer transform transition-transform hover:scale-[1.02]"
                                 >
                                     <ToolCard tool={tool} />

@@ -1,5 +1,3 @@
-import { Activity, Users, Bot, Database, FileSpreadsheet, PenTool } from 'lucide-react';
-
 export type ToolCategory = 'top' | 'potential' | 'other';
 
 export interface ToolData {

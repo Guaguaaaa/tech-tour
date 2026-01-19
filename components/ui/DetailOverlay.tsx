@@ -4,60 +4,63 @@ import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
-import { useStore } from '../../hooks/useStore';
-import { tools } from '../../data/tools';
+// 1. 引入 ToolData 类型定义
+import { ToolData } from '../../data/tools';
 
-export default function DetailOverlay() {
-    const { activeToolId, setActiveToolId } = useStore();
+// 2. 定义 Props 接口
+interface DetailOverlayProps {
+    tool: ToolData | null;
+    onClose: () => void;
+}
 
-    // 根据 ID 查找对应的工具数据
-    const activeTool = tools.find((t) => t.id === activeToolId);
+// 3. 修改组件定义，接收 props
+export default function DetailOverlay({ tool, onClose }: DetailOverlayProps) {
 
     // 当详情页打开时，禁止背景滚动；关闭时恢复
     useEffect(() => {
-        if (activeToolId) {
+        if (tool) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = 'auto';
         }
         return () => { document.body.style.overflow = 'auto'; };
-    }, [activeToolId]);
+    }, [tool]);
 
     // 获取图标组件
     // @ts-ignore
-    const IconComponent = activeTool ? (LucideIcons[activeTool.iconName] || LucideIcons.HelpCircle) : null;
+    const IconComponent = tool ? (LucideIcons[tool.iconName] || LucideIcons.HelpCircle) : null;
 
     return (
         <AnimatePresence>
-            {activeToolId && activeTool && (
+            {/* 4. 使用传入的 tool prop 判断渲染 */}
+            {tool && (
                 <>
-                    {/* 1. 背景遮罩 (Backdrop) */}
+                    {/* 背景遮罩 (Backdrop) */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={() => setActiveToolId(null)}
+                        onClick={onClose} // 使用 onClose 回调
                         className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm"
                     />
 
-                    {/* 2. 详情卡片本体 */}
+                    {/* 详情卡片本体 */}
                     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10 pointer-events-none">
                         <motion.div
-                            layoutId={`card-${activeTool.id}`} // 与 ToolCard 的 layoutId 对应
+                            layoutId={`card-${tool.id}`}
                             className="w-full max-w-5xl bg-[#0a0a0a] border border-white/10 rounded-3xl overflow-hidden shadow-2xl pointer-events-auto flex flex-col max-h-[90vh]"
-                            // 【关键修复】明确指定动画曲线，消除生硬感
                             transition={{ type: "spring", stiffness: 200, damping: 25 }}
                         >
                             {/* 顶部区域 */}
                             <div className="relative p-8 md:p-12 border-b border-white/10">
                                 <motion.div
-                                    layoutId={`bg-${activeTool.id}`}
+                                    layoutId={`bg-${tool.id}`}
                                     className="absolute inset-0 opacity-20"
-                                    style={{ background: `radial-gradient(circle at top right, ${activeTool.color}, transparent 60%)` }}
+                                    style={{ background: `radial-gradient(circle at top right, ${tool.color}, transparent 60%)` }}
                                 />
 
                                 <button
-                                    onClick={() => setActiveToolId(null)}
+                                    onClick={onClose}
                                     className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-20"
                                 >
                                     <X size={24} />
@@ -65,19 +68,19 @@ export default function DetailOverlay() {
 
                                 <div className="relative z-10 flex items-start gap-6">
                                     <motion.div
-                                        layoutId={`icon-box-${activeTool.id}`}
+                                        layoutId={`icon-box-${tool.id}`}
                                         className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20"
-                                        style={{ color: activeTool.color }}
+                                        style={{ color: tool.color }}
                                     >
                                         {IconComponent && <IconComponent size={48} />}
                                     </motion.div>
 
                                     <div>
                                         <motion.h2
-                                            layoutId={`title-${activeTool.id}`}
+                                            layoutId={`title-${tool.id}`}
                                             className="text-4xl md:text-5xl font-bold text-white mb-2"
                                         >
-                                            {activeTool.name}
+                                            {tool.name}
                                         </motion.h2>
                                         <motion.p
                                             initial={{ opacity: 0, y: 10 }}
@@ -85,8 +88,7 @@ export default function DetailOverlay() {
                                             transition={{ delay: 0.2 }}
                                             className="text-xl text-gray-400"
                                         >
-                                            {/* 【关键修复】修正字段路径，解决 TS 报错 */}
-                                            {activeTool.details.fullDesc}
+                                            {tool.details.fullDesc}
                                         </motion.p>
                                     </div>
                                 </div>
@@ -107,7 +109,7 @@ export default function DetailOverlay() {
                                         <h3 className="text-lg font-bold uppercase tracking-wider">Pain Points</h3>
                                     </div>
                                     <div className="p-6 rounded-2xl bg-red-500/5 border border-red-500/20 text-gray-300 leading-relaxed">
-                                        {activeTool.details.improvement}
+                                        {tool.details.improvement}
                                     </div>
                                 </motion.div>
 
@@ -123,7 +125,7 @@ export default function DetailOverlay() {
                                         <h3 className="text-lg font-bold uppercase tracking-wider">User Feedback</h3>
                                     </div>
                                     <div className="p-6 rounded-2xl bg-green-500/5 border border-green-500/20 text-gray-300 leading-relaxed">
-                                        {activeTool.details.userFeedback}
+                                        {tool.details.userFeedback}
                                     </div>
                                 </motion.div>
 
