@@ -28,21 +28,24 @@ export default function GapPage() {
                 </div>
 
                 {/* 分割线 (移动端横向，桌面端纵向) */}
-                <div className="hidden md:block w-px h-64 bg-gradient-to-b from-transparent via-gray-800 to-transparent mx-auto" />
-                <div className="block md:hidden h-px w-64 bg-gradient-to-r from-transparent via-gray-800 to-transparent mx-auto my-8" />
+                <div className="hidden md:block w-px h-64 bg-gradient-to-b from-transparent via-gray-700 to-transparent mx-auto" />
+                <div className="block md:hidden h-px w-64 bg-gradient-to-r from-transparent via-gray-700 to-transparent mx-auto my-8" />
 
-                {/* 右侧：Official Adoption (问题) - 变暗处理 */}
-                <div className="text-center md:text-left opacity-50">
+                {/* 右侧：Official Adoption (问题) - 已提亮文字颜色并移除了 opacity-50 */}
+                <div className="text-center md:text-left">
                     <FadeIn delay={0.4}>
-                        <h2 className="text-6xl md:text-7xl font-bold text-gray-600 tracking-tighter mb-2">
+                        {/* 提亮：text-gray-600 -> text-gray-500 */}
+                        <h2 className="text-6xl md:text-7xl font-bold text-gray-500 tracking-tighter mb-2">
                             Low
                         </h2>
                     </FadeIn>
                     <FadeIn delay={0.6}>
-                        <p className="text-xl md:text-2xl text-gray-500 font-medium mb-4">
+                        {/* 提亮：text-gray-500 -> text-gray-300 */}
+                        <p className="text-xl md:text-2xl text-gray-300 font-medium mb-4">
                             Official Advanced Tooling
                         </p>
-                        <p className="text-gray-600 text-sm md:text-base max-w-xs mr-auto leading-relaxed">
+                        {/* 提亮：text-gray-600 -> text-gray-400 */}
+                        <p className="text-gray-400 text-sm md:text-base max-w-xs mr-auto leading-relaxed">
                             Powerful tools like Digital Lab & Excel AI are deployed but collecting dust.
                         </p>
                     </FadeIn>
