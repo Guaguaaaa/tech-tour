@@ -49,7 +49,7 @@ export default function TheoryPage() {
 
             <SlideControl
                 prev="/potential"
-                next="/conclusion"
+                next="/practice"
                 pageName="The Economic Reality"
             />
         </main>
